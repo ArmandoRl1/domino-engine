@@ -2,7 +2,7 @@ import time
 
 from .player import Player
 from .deck import Deck
-from .bone import Bone
+from .piece import Piece
 from .map import Map
 
 
@@ -10,10 +10,10 @@ class Game(object):
     def __init__(
         self, 
         nplayers=4,
-        nbones_per_player=7,
+        npieces_per_player=7,
         game_number=1,
     ):
-        assert nplayers * nbones_per_player <= 28
+        assert nplayers * npieces_per_player <= 28
 
         self._current_move_idx = 1
         self.is_finished = False
@@ -25,34 +25,34 @@ class Game(object):
         # init players
         self.players = []
         for i in range(nplayers):
-            p = Player()
+            p = Player(name="P"+str(i+1))
             self.players.append(p)
 
         __players_names = ", ".join([p.name for p in self.players])
         print(f"NEW GAME. Players: {__players_names}")
-        time.sleep(2)
+        #time.sleep(2)
 
-        # give bones to users
+        # give pieces to users
         for p in self.players:
-            for nb in range(nbones_per_player):
+            for nb in range(npieces_per_player):
                 p.give(self.deck.take())
 
-        self.first_bone = Bone(game_number, game_number)
+        self.first_piece = Piece(game_number, game_number)
 
-        # check who has {self.first_bone}
+        # check who has {self.first_piece}
         for i, p in enumerate(self.players):
-            if self.first_bone in p.hand.bones:  # player who has first bone
+            if self.first_piece in p.hand.pieces:  # player who has first piece
                 self.current_player_idx = i
-                print(f"MOVE: {p} goes first with {self.first_bone}!")
+                print(f"MOVE: {p} goes first with {self.first_piece}!")
 
-                p.take(self.first_bone)
-                self.map.put(self.first_bone)
+                p.take(self.first_piece)
+                self.map.put(self.first_piece)
 
                 self._prepare_for_next_move()
 
                 return 
 
-        raise Exception(f"Noone has {self.first_bone}")
+        raise Exception(f"Noone has {self.first_piece}")
 
 
     def print_hands(self):
@@ -74,11 +74,11 @@ class Game(object):
 
         print(f"\nMove #{self._current_move_idx} by {player}:")
 
-        bone = player.go(self.map)
-        if bone is not None:
-            print(f" ---> {bone}")
-            player.take(bone)
-            self.map.put(bone)
+        piece = player.go(self.map)
+        if piece is not None:
+            print(f" ---> {piece}")
+            player.take(piece)
+            self.map.put(piece)
 
             if len(player.hand) == 0:
                 self.is_finished = True

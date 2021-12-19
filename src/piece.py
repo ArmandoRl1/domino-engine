@@ -1,6 +1,6 @@
 
 
-class Bone(object):
+class Piece(object):
     def __init__(self, a: int, b: int):
         self.a = min(a, b)
         self.b = max(a, b)
@@ -12,7 +12,7 @@ class Bone(object):
         #     __name = "🁡"
         # else:
         __name = f"[{self.a}|{self.b}]"
-        return f"Bone {__name}"
+        return f"Piece {__name}"
 
     def __eq__(self, b):
         return self.a == b.a and self.b == b.b  # always sorted

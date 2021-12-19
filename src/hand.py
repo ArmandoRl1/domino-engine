@@ -1,21 +1,21 @@
 from typing import List
 
-from .bone import Bone
+from .piece import Piece
 
 class Hand(object):
-    def __init__(self, bones: List[Bone] = []):
-        self.bones = bones
+    def __init__(self, pieces: List[Piece] = []):
+        self.pieces = pieces
 
     def __len__(self):
-        return len(self.bones)
+        return len(self.pieces)
 
     def __str__(self):
-        top_row = "|".join([str(b.a) for b in self.bones])
-        bot_row = "|".join([str(b.b) for b in self.bones])
+        top_row = '|'+"| |".join([str(b.a) for b in self.pieces])+'|'
+        bot_row = '|'+"| |".join([str(b.b) for b in self.pieces])+'|'
         return f"""  {top_row}\n  {bot_row}"""
 
-    def put(self, bone):
-        self.bones.append(bone)
+    def put(self, piece):
+        self.pieces.append(piece)
 
-    def does_have(self, bone):
-        return bone in self.bones
+    def does_have(self, piece):
+        return piece in self.pieces
