@@ -2,6 +2,8 @@ import time
 from src.game import Game
 from src.utils import *
 import argparse
+import random
+random.seed(42)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--simmulated",
@@ -9,7 +11,7 @@ parser.add_argument("-s", "--simmulated",
                     action="store_true")
 
 # Get own pieces
-own_hand = None
+own_hand:Hand = None
 while(not own_hand):
     own_pieces_text = input("Input your own pieces, as two digit numbers (eg. 11 = [·|·])\n")
     try:
@@ -25,9 +27,11 @@ print('''Player layout:
        P3
     P2[  ]P4
        P1
+
+P1 is you. P3 is your teammate.
 ''')
 
-initial_player = None
+initial_player:int = None # int from 1 to 4
 while(not initial_player):
     initial_player_text = input("Who's the first player? ")
     initial_player_text = re.sub("[^1-4]","",initial_player_text)
@@ -37,14 +41,20 @@ while(not initial_player):
     except Exception:
         raise
 
-g = Game()
+current_hands = {
+    'P1':own_hand,
+    'P2':None,
+    'P3':None,
+    'P4':None,
+}
+
+g = Game(initial_hands=current_hands,
+         initial_player=initial_player)
 
 while True:
-    g.move()
+    g.move(strategy='manual_input')
     g.print_hands()
 
     if g.is_finished:
         print(f"------> WINNER 👑: {g.winner}")
         break
-
-    time.sleep(1)

@@ -8,7 +8,6 @@ class InputError(Exception):
         self.message = 'Input Error: '+ message +'\n'
         Exception.__init__(self, self.message)
 
-
 def text_to_hand(input_text):
     # Validate that hand input is valid
     input_text=re.sub("[^0-9]","",input_text)

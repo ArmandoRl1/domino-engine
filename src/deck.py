@@ -19,7 +19,13 @@ class Deck(object):
     def __len__(self):
         return len(self.pieces)
 
-    def take(self):
+    def take_any(self):
         if self.is_empty():
             return None
         return self.pieces.pop()
+    
+    def take(self, piece):
+        for i,p in enumerate(self.pieces):
+            if(p==piece):
+                return self.pieces.pop(i)
+        raise RuntimeError("Tried to take non-existing piece from Deck")
