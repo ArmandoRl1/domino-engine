@@ -23,7 +23,7 @@ class Map(object):
     def put(self, piece, route=1):
         if self.center is None:  # putting the first one on the table
             self.center = piece
-            self.routes = [Route(piece) for _ in range(2)]  # init 4 routes
+            self.routes = [Route(piece, idx) for idx in range(2)]
             # TODO: what if the game started not from Tuple and there are already one Route?
             return
 

@@ -1,15 +1,20 @@
 class Route(object):
-    def __init__(self, piece):
-        assert piece.a == piece.b  # start only from tuple
-         
+    def __init__(self, piece, idx):
+        self.idx=idx
         self.start = None
-        self.end = piece.a
+        if idx==0:
+            self.end = piece.b
+        else:
+            self.end = piece.a
 
         self.pieces = [piece]
 
     def __str__(self):
         first_piece = self.pieces[0]
-        s = f"{first_piece.a}{first_piece.b}"
+        if self.idx==0:
+            s = f"{first_piece.a}{first_piece.b}"
+        else:
+            s = f"{first_piece.b}{first_piece.a}"
         prev_val = first_piece.b
         for b in self.pieces[1:]:
             if b.a == prev_val:
