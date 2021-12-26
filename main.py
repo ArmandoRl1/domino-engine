@@ -3,7 +3,7 @@ from src.game import Game
 from src.utils import *
 import argparse
 import random
-random.seed(42)
+random.seed(None)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--simmulated",
@@ -49,7 +49,7 @@ current_hands = {
 }
 
 g = Game(initial_hands=current_hands,
-         initial_player=initial_player)
+         current_player=initial_player)
 
 while True:
     g.move(strategy='manual_input')
@@ -57,4 +57,5 @@ while True:
 
     if g.is_finished:
         print(f"------> WINNER 👑: {g.winner}")
+        # TODO count points
         break

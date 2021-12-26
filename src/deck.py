@@ -29,3 +29,9 @@ class Deck(object):
             if(p==piece):
                 return self.pieces.pop(i)
         raise RuntimeError("Tried to take non-existing piece from Deck")
+    
+    def shuffle(self, random_state:int=None):
+        if random_state is not None:
+            random.seed(random_state)
+        random.shuffle(self.pieces)
+        return
